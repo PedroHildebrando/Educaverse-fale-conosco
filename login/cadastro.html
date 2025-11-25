@@ -1,0 +1,100 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+<head> 
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title>Cadastro - Educaverse</title> 
+    <link rel="stylesheet" href="style.css" /> 
+</head> 
+<body> 
+    
+    <div class="container"> 
+        <h1>Criar Conta</h1> 
+        
+        <form id="cadastro-form" class="contact-form"> 
+            
+            <label for="cadastro_nome">Nome Completo</label> 
+            <input 
+                type="text" 
+                id="cadastro_nome" 
+                name="nome_sobrenome" 
+                placeholder="Seu Nome e Sobrenome" 
+                required 
+            /> 
+
+            <label for="cadastro_email">E-mail</label> 
+            <input 
+                type="email" 
+                id="cadastro_email" 
+                name="email" 
+                placeholder="seuemail@exemplo.com" 
+                required 
+            /> 
+    
+            <label for="cadastro_senha">Senha</label> 
+            <input 
+                type="password" 
+                id="cadastro_senha" 
+                name="senha" 
+                placeholder="**********" 
+                required 
+            /> 
+    
+            <button type="submit" id="btn_cadastro">Cadastrar</button> 
+        </form> 
+    
+        <p id="cadastro_resultado"></p> 
+        
+        <p><a href="login.html">Já tenho conta? Fazer Login</a></p> 
+    </div> 
+    
+    <script> 
+        document.getElementById("cadastro-form").addEventListener("submit", async (event) => { 
+            event.preventDefault(); 
+        
+            const nome_sobrenome = document.getElementById("cadastro_nome").value;
+            const email = document.getElementById("cadastro_email").value; 
+            const senha = document.getElementById("cadastro_senha").value; 
+            const resultadoElement = document.getElementById("cadastro_resultado");
+        
+            resultadoElement.innerText = "Carregando...";
+            resultadoElement.style.color = "#d1c4e9"; // Cor de carregamento
+        
+            try { 
+                // Envia dados para o endpoint /cadastro no seu backend Node.js
+                const resposta = await fetch(`http://localhost:3000/cadastro`, { 
+                    method: "POST", 
+                    headers: { 
+                        "Accept": "application/json", 
+                        "Content-Type": "application/json" 
+                    }, 
+                    // Envia os 3 campos que o backend espera: nome, email e senha
+                    body: JSON.stringify({ 
+                        nome_sobrenome, 
+                        email, 
+                        senha 
+                    }) 
+                }); 
+        
+                const dados = await resposta.json(); 
+        
+                if (resposta.ok) { 
+                    resultadoElement.innerText = dados.resposta || "Cadastro realizado com sucesso!"; 
+                    resultadoElement.style.color = "lightgreen"; 
+                } else { 
+                    // Se o status for 400, 409 ou 500
+                    resultadoElement.innerText = dados.resposta || "Erro no Cadastro. Verifique os dados."; 
+                    resultadoElement.style.color = "red"; 
+                } 
+        
+            } catch (error) { 
+                // Erro de conexão (se o servidor Node.js não estiver rodando)
+                resultadoElement.innerText = "Erro: Não foi possível conectar ao servidor (http://localhost:3000)."; 
+                resultadoElement.style.color = "yellow"; 
+                console.error("Erro de conexão:", error); 
+            } 
+        }); 
+    </script> 
+    
+</body> 
+</html>
