@@ -6,9 +6,9 @@
     <title>Login e Cadastro</title> 
     <link rel="stylesheet" href="style.css" /> 
     <style>
-        /* CSS Básico para Alternância */
+       
         .form-container {
-            /* Certifique-se de que sua classe CSS .container/contact-form funcione com display block */
+            
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
@@ -16,7 +16,7 @@
             border-radius: 8px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
-        /* Esconde um formulário por padrão */
+       
         #cadastro-form-container {
             display: none; 
         }
@@ -144,9 +144,9 @@
             } 
         }
 
-        // ----------------------------------------------------
+      
         // LÓGICA DE CADASTRO
-        // ----------------------------------------------------
+       
         document.getElementById("cadastro-form").addEventListener("submit", (event) => { 
             event.preventDefault(); 
         
@@ -157,9 +157,9 @@
             enviarDados('/cadastro', email, senha, resultado);
         }); 
 
-        // ----------------------------------------------------
+       
         // LÓGICA DE LOGIN
-        // ----------------------------------------------------
+        
         document.getElementById("login-form").addEventListener("submit", (event) => { 
             event.preventDefault(); 
         
@@ -172,4 +172,5 @@
     </script> 
     
 </body> 
+
 </html>
